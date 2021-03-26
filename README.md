@@ -1,2 +1,2 @@
 # cs348-project-duetifier
-shared folder link:
+Shared folder link: https://drive.google.com/drive/folders/1nt0ZOMG8gMJItq9EA5tcwREYj-QDtOvc?usp=sharing
