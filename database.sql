@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS `type` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 INSERT INTO `type` (`importance`, `gradePercent`, `adjustPercent`) VALUES
-(0, '0-10%', 60),
-(1, '11-20%', 0),
-(2, '21-30%', -60);
+(0, '0-10%', 60.0),
+(1, '11-20%', 0.0),
+(2, '21-30%', -60.0);
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,9 @@ CREATE TABLE IF NOT EXISTS `events` (
 
 
 INSERT INTO `events` (`class_no`, `title`, `importance`, `color`, `start`, `end`, `note`) VALUES
-('CS348', 'exam', 1, '#8899cc', '2021-04-08 09:30', '2021-04-08 21:30', '');
+('CS348', 'Mid2', 1, '#8899cc', '2021-04-30 12:00', '2021-05-01 15:00', '');
+INSERT INTO `events` (`class_no`, `title`, `importance`, `color`, `start`, `end`, `note`) VALUES
+('CS348', 'Project', 1, '#8899cc', '2021-05-05 09:30', '2021-05-05 23:59', 'Group Project');
 
 
 

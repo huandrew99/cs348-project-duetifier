@@ -54,7 +54,6 @@ error_reporting(E_ALL);
 
 
 <body>
-        // Nevigate to the eventcalendar
 		<!-- Navigation -->
 		<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
 			<div class="container topnav">
@@ -91,7 +90,7 @@ error_reporting(E_ALL);
 					<div class="panel panel-default">
 						<div class="panel-heading">
 
-							<!-- Button trigger New Event modal -->
+                            <!-- 1. Button trigger New Event modal -->
 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#event">
 							 <i class="fa fa-calendar" aria-hidden="true"></i> New Event
 							</button>
@@ -205,7 +204,7 @@ error_reporting(E_ALL);
 
 
                             
-                            <!-- Button trigger Edit Course Theme modal -->
+                            <!-- 2. Button trigger Edit Course Theme modal -->
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editTheme">
                                 <i class="fa fa-edit" aria-hidden="true"></i> Edit Course Theme
                             </button>
@@ -236,7 +235,7 @@ error_reporting(E_ALL);
 
 
                         
-							<!-- Button trigger Edit Event modal -->
+							<!-- 3. Button trigger Edit Event modal -->
 							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#editevent">
 								<i class="fa fa-edit" aria-hidden="true"></i> Edit Events
 							</button>
@@ -266,7 +265,7 @@ error_reporting(E_ALL);
 
 
 
-							<!-- Button trigger Delete Event modal -->
+							<!-- 4. Button trigger Delete Event modal -->
 							<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#delevent">
 								<i class="fa fa-close" aria-hidden="true"></i> Delete Events
 							</button>

@@ -278,10 +278,13 @@ function listAllCourseEdit()
                 echo "<tr><td>";
             echo $row['class_no'];
             echo "</td><td>";
-            echo "<div class='picker' id='picker1'></div>";
-  
+            echo "<span style='width: 18px; height: 18px; margin:auto; display: inline-block; vertical-align: middle; border-radius: 1px; background: ";
+            echo $rowColor['colorname'];
+            echo "'></span> ";
+            echo str_repeat("&nbsp;", 2);
+            echo $rowColor['colorname'];
             echo "</td><td class='r'>
-            <input type='submit' name='editTheme' class='btn btn-primary btn-sm' value='Edit Theme' /></td>";
+            <a href='course_edit.php?id=". $row['class_no'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
             echo "</tr>";
     
                     
@@ -292,32 +295,17 @@ function listAllCourseEdit()
             echo "<tr><td>";
             echo $row['class_no'];
             echo "</td><td>";
-            echo "<div id='cp1' class='input-group colorpicker-component'>
-                <input id='cp1' type='text' class='form-control' name='color' value='".$rowColor['colorname']."' required/>
-                <span class='input-group-addon'><i></i></span>
-            </div>";
+            echo "<span style='width: 18px; height: 18px; margin:auto; display: inline-block; vertical-align: middle; border-radius: 1px; background: ";
+            echo $rowColor['colorname'];
+            echo "'></span> ";
+            echo str_repeat("&nbsp;", 2);
+            echo $rowColor['colorname'];
             echo "</td><td class='r'>
-            <input type='submit' name='editTheme' class='btn btn-primary btn-sm' value='Edit Theme' /></td>";
+            <a href='course_edit.php?id=". $row['class_no'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
             echo "</tr>";
         }
         echo "</table>";
     
-    
-        if(isset($_POST['editTheme']))
-            {
-                $query = mysqli_query($conection, "select adjustPercent, importance from type where gradePercent = '".$_POST['gradePercent']."'");
-                $row = mysqli_fetch_assoc($query);
-                $adjustPercent = $row['adjustPercent'] ?? null;
-                
-                $courseColor = mysqli_query($conection, "SELECT colorname FROM class NATURAL JOIN color WHERE class_no = '".$_POST['course']."'");
-                $rowColor = mysqli_fetch_assoc($courseColor);
-                $courseColor2 = $rowColor['colorname'] ?? null;
-                           
-                $color = alter_brightness($courseColor2, $adjustPercent);
-                    
-                    
-                updateEvent($_GET['id'],$_POST['course'],$_POST['title'],$row['importance'],$color,$_POST['start'],$_POST['end'],trim(preg_replace('/\s+/', ' ',nl2br(str_replace( "'", "«", $_POST['note'])))));
-            }
 }
     
     
@@ -425,6 +413,20 @@ function getCourse($id)
 
     
     
+function getColor($id)
+{
+    global $conection;
+    $sql = mysqli_query($conection, "select colorname from class natural join color WHERE class_no='".$id."'");
+    $row = mysqli_fetch_assoc($sql);
+        
+    echo "<option value='".$row['colorname']."' required>".$row['colorname']."</option>";
+    
+}
+    
+
+    
+    
+    
 function getGradePercent($id)
 {
     global $conection;
@@ -437,7 +439,6 @@ function getGradePercent($id)
     
 
     
-/* Please refer here when doing 'edit theme color', you also need to make a new theme_edit php page */
 // Edit event Information (used in events_edit.php)
 function editEvent($event_id)
 {
@@ -481,7 +482,6 @@ function editEvent($event_id)
 
 }
 
-/* Please refer here when doing 'edit theme color' */
 // Update event Information (used in events_edit.php)
 function updateEvent($id,$course,$title,$importance,$color,$start,$end,$note)
 {
@@ -497,6 +497,12 @@ function updateEvent($id,$course,$title,$importance,$color,$start,$end,$note)
             }
             return true;
 }
+    
+    
+
+    
+    
+
 
 
 // Generate new color shade based on importance
@@ -516,3 +522,5 @@ function alter_brightness($colourstr, $steps) {
 
   return '#'.dechex($r).dechex($g).dechex($b);
 }
+    
+
