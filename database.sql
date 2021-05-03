@@ -8,7 +8,8 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `class` (
   `class_no` VARCHAR(10) NOT NULL,
   `color_id` int(11) NOT NULL,
-  PRIMARY KEY (`class_no`)
+  PRIMARY KEY (`class_no`),
+  INDEX (`color_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 INSERT INTO `class` (`class_no`, `color_id`) VALUES
@@ -75,7 +76,8 @@ CREATE TABLE IF NOT EXISTS `events` (
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `note` text NOT NULL,
-  PRIMARY KEY (`event_id`)
+  PRIMARY KEY (`event_id`),
+  INDEX (`start`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 
