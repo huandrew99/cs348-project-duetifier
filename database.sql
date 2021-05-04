@@ -117,7 +117,11 @@ DELIMITER ;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insEvent`(IN cla VARCHAR(10), IN ti text, IN imp int(11), IN col VARCHAR(10), IN st datetime, IN en datetime, IN no text)
 BEGIN
+	set autocommit = off;
+	start TRANSACTION;
+	SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 	INSERT INTO events (class_no, title, importance, color, start, end, note) VALUES  (cla, ti, imp, col, st, en, no);
+	commit;
 END$$
 DELIMITER ;
 
@@ -131,7 +135,11 @@ DELIMITER ;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `upEvent`(IN `id` INT(11), IN `cla` VARCHAR(11), IN `ti` TEXT, IN `imp` INT(11), IN `st` DATETIME, IN `en` DATETIME, IN `no` TEXT)
 BEGIN
-  UPDATE events SET title=ti, class_no = cla, importance = imp, start=st, end=en, note = no WHERE event_id=id;
+	set autocommit = off;
+	start TRANSACTION;
+	SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+  	UPDATE events SET title=ti, class_no = cla, importance = imp, start=st, end=en, note = no WHERE event_id=id;
+	commit;
 END$$
 DELIMITER ;
 <<<<<<< Updated upstream
