@@ -1,0 +1,27 @@
+runtime: php72
+
+runtime_config:
+    document_root: .
+env_variables:
+    APP_LOG: errorlog
+    GOOGLE_STORAGE_BUCKET: duetifier.appspot.com
+    MYSQL_USER: root
+    MYSQL_PASSWORD: TEAM47
+    MYSQL_DB: duetifierDB
+    MYSQL_DSN: /cloudsql/duetifier:us-central1:database
+beta_settings:
+    cloud_sql_instances: "duetifier:us-central1:database"
+handlers:
+# Serve a directory as a static resource.
+- url: /assets
+  static_dir: assets
+# Serve images as static resources.
+- url: /(.+\.(gif|png|jpg|css|js|map|PNG))$
+  static_files: \1
+  upload: .+\.(gif|png|jpg|css|js|map|PNG)$
+# Serve your app through a front controller at index.php or public/index.php.
+- url: /.*
+  script: auto
+  
+entrypoint:
+  serve handler.php
