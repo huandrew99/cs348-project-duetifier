@@ -84,9 +84,53 @@ INSERT INTO `events` (`class_no`, `title`, `importance`, `color`, `start`, `end`
 INSERT INTO `events` (`class_no`, `title`, `importance`, `color`, `start`, `end`, `note`) VALUES
 ('CS348', 'Project', 1, '#8899cc', '2021-05-05 09:30', '2021-05-05 23:59', 'Group Project');
 
+-- not used start
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Classes`()
+BEGIN
+	SELECT * from class ORDER BY class_no ASC;
+END$$
+DELIMITER ;
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Types`()
+BEGIN
+	select * from type ORDER BY importance ASC;
+END$$
+DELIMITER ;
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `courseColor`(IN course CHAR(10))
+BEGIN
+	SELECT colorname FROM class NATURAL JOIN color WHERE class_no = course;
+END$$
+DELIMITER ;
+-- not used end
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delEvent`(IN `id` INT(11))
+BEGIN
+  DELETE FROM events WHERE event_id = id LIMIT 1;
+END$$
+DELIMITER ;
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insEvent`(IN cla VARCHAR(10), IN ti text, IN imp int(11), IN col VARCHAR(10), IN st datetime, IN en datetime, IN no text)
+BEGIN
+	INSERT INTO events (class_no, title, importance, color, start, end, note) VALUES  (cla, ti, imp, col, st, en, no);
+END$$
+DELIMITER ;
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `upClassColor`(IN `id` VARCHAR(11), IN `col` VARCHAR(10))
+BEGIN
+  UPDATE class SET color_id = col WHERE class_no = id;
+END$$
+DELIMITER ;
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `upEvent`(IN `id` INT(11), IN `cla` VARCHAR(11), IN `ti` TEXT, IN `imp` INT(11), IN `st` DATETIME, IN `en` DATETIME, IN `no` TEXT)
+BEGIN
+  UPDATE events SET title=ti, class_no = cla, importance = imp, start=st, end=en, note = no WHERE event_id=id;
+END$$
+DELIMITER ;

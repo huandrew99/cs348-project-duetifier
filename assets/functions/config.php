@@ -30,6 +30,13 @@
 	if (!$db_selected) {
 		die("Database selection failed: " . mysqli_error());
 	}
+
+	// prepared statements:
+	$Classes = $conection->prepare("select * from class ORDER BY class_no ASC");
+	$Types = $conection->prepare("select * from type ORDER BY importance ASC");
+	$Colors = $conection->prepare("SELECT * FROM color");
+	$Events = $conection->prepare("select * from events");
+	
 	
     session_start(); 
 ?>

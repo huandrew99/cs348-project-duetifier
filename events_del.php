@@ -1,10 +1,9 @@
 <?php
 require 'assets/functions/functions.php';
-$var = $_GET['id'];
+$id = $_GET['id'];
 
-$query = "DELETE FROM `$dbname`.`events` WHERE `events`.`event_id` = '$var' LIMIT 1";
-
-mysqli_query($conection, $query) or die(mysqli_error());
+// stored procedures 
+$conection->query("call delEvent('" . $id . "')");
 
 ?>
 

@@ -6,7 +6,8 @@ require("config.php");
 /*===================================== ANTI SQL INJECTION Function ========================================*/
 /*==========================================================================================================*/
 
-function antiSQLInjection($texto){
+function antiSQLInjection($texto)
+{
     // Words for search
     $check[1] = chr(34); // simbol "
     $check[2] = chr(39); // simbol '
@@ -35,18 +36,18 @@ function antiSQLInjection($texto){
     $check[25] = 'into';
     $check[26] = 'VALUES';
 
-    // Cria se as variáveis $y e $x para controle no WHILE que fará a busca e substituição
+    // Cria se as variï¿½veis $y e $x para controle no WHILE que farï¿½ a busca e substituiï¿½ï¿½o
     $y = 1;
     $x = sizeof($check);
-    // Faz-se o WHILE, procurando alguma das palavras especificadas acima, caso encontre alguma delas, este script substituirá por um espaço em branco " ".
-    while($y <= $x){
-           $target = strpos($texto,$check[$y]);
-            if($target !== false){
-                $texto = str_replace($check[$y], "", $texto);
-            }
+    // Faz-se o WHILE, procurando alguma das palavras especificadas acima, caso encontre alguma delas, este script substituirï¿½ por um espaï¿½o em branco " ".
+    while ($y <= $x) {
+        $target = strpos($texto, $check[$y]);
+        if ($target !== false) {
+            $texto = str_replace($check[$y], "", $texto);
+        }
         $y++;
     }
-    // Retorna a variável limpa sem perigos de SQL Injection
+    // Retorna a variï¿½vel limpa sem perigos de SQL Injection
     return $texto;
 }
 
@@ -59,11 +60,14 @@ function antiSQLInjection($texto){
 function listEvents()
 {
     global $conection;
-    $sql = mysqli_query($conection, "select * from events");
+    global $Events;
+    $Events->execute();
+    $sql = $Events->get_result();
+    // $sql = mysqli_query($conection, "select * from events");
     $row = mysqli_num_rows($sql);
-    
-    
-    if($row == ''){
+
+
+    if ($row == '') {
         echo "
         <script>
         $(document).ready(function() {
@@ -74,13 +78,13 @@ function listEvents()
     </script>
     ";
     }
-    if($row != '') {
+    if ($row != '') {
         echo "
         <script>
         $(document).ready(function() {
             $('#events').fullCalendar({
                 lang: 'en',
-                defaultDate: '".date("Y-m-d")."',
+                defaultDate: '" . date("Y-m-d") . "',
                 editable: true,
                 eventLimit: true,
                 displayEventTime: false,
@@ -141,20 +145,20 @@ function listEvents()
 
                 events: [
                     ";
-                    while ($row = mysqli_fetch_array($sql)) {
-                echo "
+        while ($row = mysqli_fetch_array($sql)) {
+            echo "
                     {
-                        id: '".$row['event_id']."',
-                        course: '".$row['class_no']."',
-                        title: '".$row['class_no']." ".$row['title']."',
-                        note: '".$row['note']."',
-                        start: '".$row['start']."',
-                        end: '".$row['end']."',
-                        color: '".$row['color']."',
+                        id: '" . $row['event_id'] . "',
+                        course: '" . $row['class_no'] . "',
+                        title: '" . $row['class_no'] . " " . $row['title'] . "',
+                        note: '" . $row['note'] . "',
+                        start: '" . $row['start'] . "',
+                        end: '" . $row['end'] . "',
+                        color: '" . $row['color'] . "',
                         allDay: false
                     },";
-            } ;
-            echo "
+        };
+        echo "
                 ],
                         
             });
@@ -164,11 +168,12 @@ function listEvents()
     }
 }
 
-    
-    
-    
-    
-// Display events information inside a modal box
+
+
+
+
+// Display events information inside a modal box;
+// dont have any sql in it
 function modalEvents()
 {
 
@@ -214,11 +219,14 @@ function modalEvents()
 function listAllEventsDelete()
 {
     global $conection;
-    $sql = mysqli_query($conection, "select * from events ORDER BY start ASC");
+    global $Events;
+    $Events->execute();
+    $sql = $Events->get_result();
+    // $sql = mysqli_query($conection, "select * from events ORDER BY start ASC");
     $row = mysqli_fetch_assoc($sql);
-        
-        echo "<table class='table table-striped table-bordered table-hover dataTables-example' id='dataTables-example'>";
-        echo "  <thead>
+
+    echo "<table class='table table-striped table-bordered table-hover dataTables-example' id='dataTables-example'>";
+    echo "  <thead>
                 <tr>
                   <th>COURSE</th>
                   <th>TITLE</th>
@@ -227,32 +235,32 @@ function listAllEventsDelete()
                   <th></th>
                 </tr>
               </thead>";
-              echo "<tr><td>";
-            echo $row['class_no'];
-            echo "</td><td>";
-            echo $row['title'];
-            echo "</td><td>";
-            echo $row['start'];
-            echo "</td><td>";
-            echo $row['end'];
-            echo "</td><td class='r'>
-            <a href='javascript:EliminaEvento(". $row['event_id'] . ")'class='btn btn-danger btn-sm' role='button'><i class='fa fa-fw fa-trash'></i> DELETE</a></td>";
-        while ($row = mysqli_fetch_array($sql)) {
-            // Print out the contents of each row into a table
-            echo "<tr><td>";
-            echo $row['class_no'];
-            echo "</td><td>";
-            echo $row['title'];
-            echo "</td><td>";
-            echo $row['start'];
-            echo "</td><td>";
-            echo $row['end'];
-            echo "</td><td class='r'>
-            <a href='javascript:EliminaEvento(". $row['event_id'] . ")'class='btn btn-danger btn-sm' role='button'><i class='fa fa-fw fa-trash'></i> DELETE</a></td>";
-            echo "</tr>";
-        }
+    echo "<tr><td>";
+    echo $row['class_no'];
+    echo "</td><td>";
+    echo $row['title'];
+    echo "</td><td>";
+    echo $row['start'];
+    echo "</td><td>";
+    echo $row['end'];
+    echo "</td><td class='r'>
+            <a href='javascript:EliminaEvento(" . $row['event_id'] . ")'class='btn btn-danger btn-sm' role='button'><i class='fa fa-fw fa-trash'></i> DELETE</a></td>";
+    while ($row = mysqli_fetch_array($sql)) {
+        // Print out the contents of each row into a table
+        echo "<tr><td>";
+        echo $row['class_no'];
+        echo "</td><td>";
+        echo $row['title'];
+        echo "</td><td>";
+        echo $row['start'];
+        echo "</td><td>";
+        echo $row['end'];
+        echo "</td><td class='r'>
+            <a href='javascript:EliminaEvento(" . $row['event_id'] . ")'class='btn btn-danger btn-sm' role='button'><i class='fa fa-fw fa-trash'></i> DELETE</a></td>";
+        echo "</tr>";
+    }
 
-        echo "</table>";
+    echo "</table>";
 }
 
 
@@ -261,66 +269,71 @@ function listAllEventsDelete()
 function listAllCourseEdit()
 {
     global $conection;
-    $sql = mysqli_query($conection, "select * from class ORDER BY class_no ASC");
+    global $Classes;
+    $Classes->execute();
+    $sql = $Classes->get_result();
+    // $sql = mysqli_query($conection, "select * from class ORDER BY class_no ASC");
     $row = mysqli_fetch_assoc($sql);
-    
-    
-        $sqlColor = mysqli_query($conection, "select colorname from color where color_id = '".$row['color_id']."'");
-        $rowColor = mysqli_fetch_assoc($sqlColor);
-        echo "<table class='table table-striped table-bordered table-hover dataTables-example' id='dataTables-example'>";
-        echo "  <thead>
+
+
+    $sqlColor = mysqli_query($conection, "select colorname from color where color_id = '" . $row['color_id'] . "'");
+    $rowColor = mysqli_fetch_assoc($sqlColor);
+    echo "<table class='table table-striped table-bordered table-hover dataTables-example' id='dataTables-example'>";
+    echo "  <thead>
                 <tr>
                     <th>COURSE</th>
                     <th>COLOR</th>
                     <th></th>
                 </tr>
                 </thead>";
-                echo "<tr><td>";
-            echo $row['class_no'];
-            echo "</td><td>";
-            echo "<span style='width: 18px; height: 18px; margin:auto; display: inline-block; vertical-align: middle; border-radius: 1px; background: ";
-            echo $rowColor['colorname'];
-            echo "'></span> ";
-            echo str_repeat("&nbsp;", 2);
-            echo $rowColor['colorname'];
-            echo "</td><td class='r'>
-            <a href='course_edit.php?id=". $row['class_no'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
-            echo "</tr>";
-    
-                    
-        while ($row = mysqli_fetch_array($sql)) {
-            // Print out the contents of each row into a table
-            $sqlColor = mysqli_query($conection, "select colorname from color where color_id = '".$row['color_id']."'");
-            $rowColor = mysqli_fetch_assoc($sqlColor);
-            echo "<tr><td>";
-            echo $row['class_no'];
-            echo "</td><td>";
-            echo "<span style='width: 18px; height: 18px; margin:auto; display: inline-block; vertical-align: middle; border-radius: 1px; background: ";
-            echo $rowColor['colorname'];
-            echo "'></span> ";
-            echo str_repeat("&nbsp;", 2);
-            echo $rowColor['colorname'];
-            echo "</td><td class='r'>
-            <a href='course_edit.php?id=". $row['class_no'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-    
+    echo "<tr><td>";
+    echo $row['class_no'];
+    echo "</td><td>";
+    echo "<span style='width: 18px; height: 18px; margin:auto; display: inline-block; vertical-align: middle; border-radius: 1px; background: ";
+    echo $rowColor['colorname'];
+    echo "'></span> ";
+    echo str_repeat("&nbsp;", 2);
+    echo $rowColor['colorname'];
+    echo "</td><td class='r'>
+            <a href='course_edit.php?id=" . $row['class_no'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
+    echo "</tr>";
+
+
+    while ($row = mysqli_fetch_array($sql)) {
+        // Print out the contents of each row into a table
+        $sqlColor = mysqli_query($conection, "select colorname from color where color_id = '" . $row['color_id'] . "'");
+        $rowColor = mysqli_fetch_assoc($sqlColor);
+        echo "<tr><td>";
+        echo $row['class_no'];
+        echo "</td><td>";
+        echo "<span style='width: 18px; height: 18px; margin:auto; display: inline-block; vertical-align: middle; border-radius: 1px; background: ";
+        echo $rowColor['colorname'];
+        echo "'></span> ";
+        echo str_repeat("&nbsp;", 2);
+        echo $rowColor['colorname'];
+        echo "</td><td class='r'>
+            <a href='course_edit.php?id=" . $row['class_no'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
+        echo "</tr>";
+    }
+    echo "</table>";
 }
-    
-    
-    
-    
-    
+
+
+
+
+
 // Display all events in event edit modal
 function listAllEventsEdit()
 {
     global $conection;
-    $sql = mysqli_query($conection, "select * from events ORDER BY start ASC");
+    global $Events;
+    $Events->execute();
+    $sql = $Events->get_result();
+    // $sql = mysqli_query($conection, "select * from events ORDER BY start ASC");
     $row = mysqli_fetch_assoc($sql);
-        
-        echo "<table class='table table-striped table-bordered table-hover dataTables-example' id='dataTables-example'>";
-        echo "  <thead>
+
+    echo "<table class='table table-striped table-bordered table-hover dataTables-example' id='dataTables-example'>";
+    echo "  <thead>
                 <tr>
                   <th>COURSE</th>
                   <th>TITLE</th>
@@ -329,121 +342,119 @@ function listAllEventsEdit()
                   <th></th>
                 </tr>
               </thead>";
-              echo "<tr><td>";
-            echo $row['class_no'];
-            echo "</td><td>";
-            echo $row['title'];
-            echo "</td><td>";
-            echo $row['start'];
-            echo "</td><td>";
-            echo $row['end'];
-            echo "</td><td class='r'>
-            <a href='events_edit.php?id=". $row['event_id'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
-        while ($row = mysqli_fetch_array($sql)) {
-            // Print out the contents of each row into a table
-            echo "<tr><td>";
-            echo $row['class_no'];
-            echo "</td><td>";
-            echo $row['title'];
-            echo "</td><td>";
-            echo $row['start'];
-            echo "</td><td>";
-            echo $row['end'];
-            echo "</td><td class='r'>
-            <a href='events_edit.php?id=". $row['event_id'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
-            echo "</tr>";
-        }
+    echo "<tr><td>";
+    echo $row['class_no'];
+    echo "</td><td>";
+    echo $row['title'];
+    echo "</td><td>";
+    echo $row['start'];
+    echo "</td><td>";
+    echo $row['end'];
+    echo "</td><td class='r'>
+            <a href='events_edit.php?id=" . $row['event_id'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
+    while ($row = mysqli_fetch_array($sql)) {
+        // Print out the contents of each row into a table
+        echo "<tr><td>";
+        echo $row['class_no'];
+        echo "</td><td>";
+        echo $row['title'];
+        echo "</td><td>";
+        echo $row['start'];
+        echo "</td><td>";
+        echo $row['end'];
+        echo "</td><td class='r'>
+            <a href='events_edit.php?id=" . $row['event_id'] . "' class='btn btn-primary btn-sm' role='button'><i class='fa fa-fw fa-edit'></i> EDIT</a></td>";
+        echo "</tr>";
+    }
 
-        echo "</table>";
-    
+    echo "</table>";
 }
-    
-    
+
+
 
 // Display all Types (sort of category for Events)
 function listAllTypes()
 {
     global $conection;
-    $sql = mysqli_query($conection, "select * from type ORDER BY id ASC");
+    global $Types;
+    $Types->execute();
+    $sql = $Types->get_result();
+    // $sql = mysqli_query($conection, "select * from type ORDER BY id ASC");
     $row = mysqli_fetch_assoc($sql);
-        
-        echo "<table class='table table-striped table-bordered table-hover dataTables-example' id='dataTables-example'>";
-        echo "  <thead>
+
+    echo "<table class='table table-striped table-bordered table-hover dataTables-example' id='dataTables-example'>";
+    echo "  <thead>
                 <tr>
                     <th>ID</th>
                     <th>TITLE</th>
                     <th></th>
                 </tr>
               </thead>";
-            echo "<tr><td>";
-            echo $row['event_id'];
-            echo "</td>";
-            echo "<td>";
-            echo $row['title'];
-            echo "</td>";
-            echo "<td class='r'>
-            <a href='javascript:EliminaTipo(". $row['event_id'] .")'class='btn btn-danger btn-sm' role='button'><i class='fa fa-fw fa-trash'></i> DELETE</a></td>";
-            echo "</tr>";
-        while ($row = mysqli_fetch_array($sql)) {
-            // Print out the contents of each row into a table
-            echo "<tr><td>";
-            echo $row['event_id'];
-            echo "</td>";
-            echo "<td>";
-            echo $row['title'];
-            echo "</td>";
-            echo "<td class='r'>
-            <a href='javascript:EliminaTipo(". $row['event_id'] . ")'class='btn btn-danger btn-sm' role='button'><i class='fa fa-fw fa-trash'></i> DELETE</a></td>";
-            echo "</tr>";
-        }
-        echo "</table>";
+    echo "<tr><td>";
+    echo $row['event_id'];
+    echo "</td>";
+    echo "<td>";
+    echo $row['title'];
+    echo "</td>";
+    echo "<td class='r'>
+            <a href='javascript:EliminaTipo(" . $row['event_id'] . ")'class='btn btn-danger btn-sm' role='button'><i class='fa fa-fw fa-trash'></i> DELETE</a></td>";
+    echo "</tr>";
+    while ($row = mysqli_fetch_array($sql)) {
+        // Print out the contents of each row into a table
+        echo "<tr><td>";
+        echo $row['event_id'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['title'];
+        echo "</td>";
+        echo "<td class='r'>
+            <a href='javascript:EliminaTipo(" . $row['event_id'] . ")'class='btn btn-danger btn-sm' role='button'><i class='fa fa-fw fa-trash'></i> DELETE</a></td>";
+        echo "</tr>";
+    }
+    echo "</table>";
 }
 
-    
-    
-    
+
+
+
 function getCourse($id)
 {
     global $conection;
-    $sql = mysqli_query($conection, "select class_no from events WHERE event_id='".$id."'");
+    $sql = mysqli_query($conection, "select class_no from events WHERE event_id='" . $id . "'");
     $row = mysqli_fetch_assoc($sql);
-    
-    echo "<option value='".$row['class_no']."' required>".$row['class_no']."</option>";
+
+    echo "<option value='" . $row['class_no'] . "' required>" . $row['class_no'] . "</option>";
 }
 
-    
-    
+
+
 function getColor($id)
 {
     global $conection;
-    $sql = mysqli_query($conection, "select colorname from class natural join color WHERE class_no='".$id."'");
+    $sql = mysqli_query($conection, "select colorname from class natural join color WHERE class_no='" . $id . "'");
     $row = mysqli_fetch_assoc($sql);
-        
-    echo "<option value='".$row['colorname']."' required>".$row['colorname']."</option>";
-    
-}
-    
 
-    
-    
-    
+    echo "<option value='" . $row['colorname'] . "' required>" . $row['colorname'] . "</option>";
+}
+
+
 function getGradePercent($id)
 {
     global $conection;
-    $sql = mysqli_query($conection, "select gradePercent from events NATURAL JOIN type WHERE event_id='".$id."'");
+    $sql = mysqli_query($conection, "select gradePercent from events NATURAL JOIN type WHERE event_id='" . $id . "'");
     $row = mysqli_fetch_assoc($sql);
-        
-    echo "<option value='".$row['gradePercent']."' required>".$row['gradePercent']."</option>";
+
+    echo "<option value='" . $row['gradePercent'] . "' required>" . $row['gradePercent'] . "</option>";
 }
 
-    
 
-    
+
+
 // Edit event Information (used in events_edit.php)
 function editEvent($event_id)
 {
     global $conection;
-    $sql = mysqli_query($conection, "select * from events WHERE event_id='".$event_id."'");
+    $sql = mysqli_query($conection, "select * from events WHERE event_id='" . $event_id . "'");
     $row = mysqli_fetch_assoc($sql);
 
     echo "
@@ -453,9 +464,9 @@ function editEvent($event_id)
                     <div class='form-group'>
                         <label class='col-md-3 control-label' for='start'>Start Date</label>
                         <div class='input-group date form_date col-md-3' data-date='' data-date-format='yyyy-mm-dd hh:ii' data-link-field='start' data-link-format='yyyy-mm-dd hh:ii'>
-                            <span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span><input class='form-control' size='16' type='text' value='".$row['start']."' readonly>
+                            <span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span><input class='form-control' size='16' type='text' value='" . $row['start'] . "' readonly>
                         </div>
-                        <input id='start' name='start' type='hidden' value='".$row['start']."' required>
+                        <input id='start' name='start' type='hidden' value='" . $row['start'] . "' required>
 
                     </div>
                             
@@ -463,9 +474,9 @@ function editEvent($event_id)
                     <div class='form-group'>
                         <label class='col-md-3 control-label' for='end'>End Date</label>
                         <div class='input-group date form_date col-md-3' data-date='' data-date-format='yyyy-mm-dd hh:ii' data-link-field='end' data-link-format='yyyy-mm-dd hh:ii'>
-                            <span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span><input class='form-control' size='16' type='text' value='".$row['end']."' readonly>
+                            <span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span><input class='form-control' size='16' type='text' value='" . $row['end'] . "' readonly>
                         </div>
-                        <input id='end' name='end' type='hidden' value='".$row['end']."' required>
+                        <input id='end' name='end' type='hidden' value='" . $row['end'] . "' required>
 
                     </div>
                     
@@ -474,53 +485,55 @@ function editEvent($event_id)
                     <div class='form-group'>
                         <label class='col-md-3 control-label' for='note'>Note</label>
                         <div class='col-md-6'>
-                            <textarea class='form-control' rows='5' name='note' id='note'>".$row['note']."</textarea>
+                            <textarea class='form-control' rows='5' name='note' id='note'>" . $row['note'] . "</textarea>
                         </div>
                     </div>
     
                 ";
-
 }
 
 // Update event Information (used in events_edit.php)
-function updateEvent($id,$course,$title,$importance,$color,$start,$end,$note)
+function updateEvent($id, $course, $title, $importance, $color, $start, $end, $note)
 {
     global $conection;
-    $query = mysqli_query($conection,"UPDATE events SET class_no = '$course', title = '$title', importance = '$importance', color = '$color', start = '$start', end = '$end', note = '$note' WHERE event_id = '$id'");
-    if (!$query) {
+    $q1 = $conection->query("call upEvent('" . $id . "', '" . $course ."', '" . $title . "', '" . $importance . "', '" . $start . "', '" . $end . "', '" . $note . "')");
+    $q2 = $conection->query("call upClassColor('" .$id. "', '" . $color . "')");
+    // $query = mysqli_query($conection, "UPDATE events SET class_no = '$course', title = '$title', importance = '$importance', color = '$color', start = '$start', end = '$end', note = '$note' WHERE event_id = '$id'");
+
+    // if (!$query) {
+    if (!($q1 && $q2)) {
         echo ("No data was inserted!: " . mysqli_error());
         return false;
     } else {
-            echo "<script type='text/javascript'>swal('Good job!', 'Event Updated!', 'success');</script>";
-            echo '<meta http-equiv="refresh" content="1; index.php">';
-            die();
-            }
-            return true;
+        echo "<script type='text/javascript'>swal('Good job!', 'Event Updated!', 'success');</script>";
+        echo '<meta http-equiv="refresh" content="1; index.php">';
+        die();
+    }
+    return true;
 }
-    
-    
 
-    
-    
+
+
+
+
 
 
 
 // Generate new color shade based on importance
-function alter_brightness($colourstr, $steps) {
-  $colourstr = str_replace('#','',$colourstr);
-  $rhex = substr($colourstr,0,2);
-  $ghex = substr($colourstr,2,2);
-  $bhex = substr($colourstr,4,2);
+function alter_brightness($colourstr, $steps)
+{
+    $colourstr = str_replace('#', '', $colourstr);
+    $rhex = substr($colourstr, 0, 2);
+    $ghex = substr($colourstr, 2, 2);
+    $bhex = substr($colourstr, 4, 2);
 
-  $r = hexdec($rhex);
-  $g = hexdec($ghex);
-  $b = hexdec($bhex);
+    $r = hexdec($rhex);
+    $g = hexdec($ghex);
+    $b = hexdec($bhex);
 
-  $r = max(0,min(255,$r + $steps));
-  $g = max(0,min(255,$g + $steps));
-  $b = max(0,min(255,$b + $steps));
+    $r = max(0, min(255, $r + $steps));
+    $g = max(0, min(255, $g + $steps));
+    $b = max(0, min(255, $b + $steps));
 
-  return '#'.dechex($r).dechex($g).dechex($b);
+    return '#' . dechex($r) . dechex($g) . dechex($b);
 }
-    
-

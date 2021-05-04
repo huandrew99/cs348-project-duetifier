@@ -106,7 +106,10 @@ error_reporting(E_ALL);
 									<select name='color' id='color' class="form-control input-md" onchange="setColor()">
 										<?php
 										echo getColor(antiSQLInjection($_GET['id']));
-										$query = mysqli_query($conection, "select * from color ORDER BY color_id ASC");
+										//prepared statements
+										$Colors->execute();
+										$query = $Colors->get_result();
+										// $query = mysqli_query($conection, "select * from color ORDER BY color_id ASC");
                                         echo "<option value='No course Selected' required>---------</option>";
 										while ($row = mysqli_fetch_assoc($query)) {
 											echo "
@@ -149,8 +152,8 @@ error_reporting(E_ALL);
                     $colorQuery = mysqli_query($conection, "SELECT color_id FROM color WHERE colorname = '".$_POST['color']."'");
                     $row = mysqli_fetch_assoc($colorQuery);
                     $color = $row['color_id'] ?? null;
-                  
-                    $query = mysqli_query($conection,"UPDATE class SET color_id = '".$color."' WHERE class_no = '".$_GET['id']."'");
+					// stored procedures
+					$conection->query("call upClassColor('" .$_GET['id']. "', '" . $color . "')");
                     if (!$query) {
                         echo ("No data was inserted!: " . mysqli_error());
                         return false;

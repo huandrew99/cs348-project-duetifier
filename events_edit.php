@@ -87,7 +87,9 @@ error_reporting(E_ALL);
 									<select name='course' class="form-control input-md">
 										<?php
 										echo getCourse(antiSQLInjection($_GET['id']));
-										$query = mysqli_query($conection, "select * from class ORDER BY class_no ASC");
+										//prepared statements
+										$Classes->execute();
+										$query = $Classes->get_result();
                                         echo "<option value='No course Selected' required>---------</option>";
 										while ($row = mysqli_fetch_assoc($query)) {
 											echo "
@@ -122,7 +124,9 @@ error_reporting(E_ALL);
                                     <select name='gradePercent' class="form-control input-md">
                                         <?php
                                         echo getGradePercent(antiSQLInjection($_GET['id']));
-                                        $query = mysqli_query($conection, "select * from type ORDER BY importance ASC");
+                                        //prepared statements
+										$Types->execute();
+										$query = $Types->get_result();
                                         echo "<option value='No gradePercent Selected' required>---------</option>";
                                         while ($row = mysqli_fetch_assoc($query)) {
                                             echo "
