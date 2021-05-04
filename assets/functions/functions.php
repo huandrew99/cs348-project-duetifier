@@ -496,12 +496,20 @@ function editEvent($event_id)
 function updateEvent($id, $course, $title, $importance, $color, $start, $end, $note)
 {
     global $conection;
+<<<<<<< Updated upstream
     $q1 = $conection->query("call upEvent('" . $id . "', '" . $course ."', '" . $title . "', '" . $importance . "', '" . $start . "', '" . $end . "', '" . $note . "')");
     $q2 = $conection->query("call upClassColor('" .$id. "', '" . $color . "')");
     // $query = mysqli_query($conection, "UPDATE events SET class_no = '$course', title = '$title', importance = '$importance', color = '$color', start = '$start', end = '$end', note = '$note' WHERE event_id = '$id'");
 
     // if (!$query) {
     if (!($q1 && $q2)) {
+=======
+    $q1 = $conection->query("call upEvent('" . $id . "', '" . $course ."', '" . $title . "', '" . $importance . "', '" . $color . "', '" . $start . "', '" . $end . "', '" . $note . "')");
+    // $query = mysqli_query($conection, "UPDATE events SET class_no = '$course', title = '$title', importance = '$importance', color = '$color', start = '$start', end = '$end', note = '$note' WHERE event_id = '$id'");
+
+    // if (!$query) {
+    if (!($q1)) {
+>>>>>>> Stashed changes
         echo ("No data was inserted!: " . mysqli_error());
         return false;
     } else {

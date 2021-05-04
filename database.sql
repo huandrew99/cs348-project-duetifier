@@ -134,3 +134,13 @@ BEGIN
   UPDATE events SET title=ti, class_no = cla, importance = imp, start=st, end=en, note = no WHERE event_id=id;
 END$$
 DELIMITER ;
+<<<<<<< Updated upstream
+=======
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `upEventTime`(IN `id` INT(11),IN `st` DATETIME, IN `en` DATETIME)
+BEGIN
+  UPDATE events SET start=st, end=en WHERE event_id=id;
+END$$
+DELIMITER ;
+>>>>>>> Stashed changes

@@ -15,6 +15,10 @@ $course = $_POST['course'];
 // update the records
 // stored procedures
 
+<<<<<<< Updated upstream
 $conection->query("call upEvent('" . $id . "', '" . $course ."', '" . $title . "', '" . $importance . "', '" . $start . "', '" . $end . "', '" . $note . "')");
+=======
+$conection->query("call upEventTime('" . $id . "', '" . $start . "', '" . $end . "')");
+>>>>>>> Stashed changes
 
 ?>
