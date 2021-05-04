@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS `type` (
   `importance` int(11) NOT NULL,
   `gradePercent` text NOT NULL,
   `adjustPercent` decimal(3,1) NOT NULL,
-  PRIMARY KEY (`importance`)
+  PRIMARY KEY (`importance`),
+  INDEX (`gradePercent`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 INSERT INTO `type` (`importance`, `gradePercent`, `adjustPercent`) VALUES
