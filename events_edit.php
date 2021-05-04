@@ -164,6 +164,7 @@ error_reporting(E_ALL);
 			if(isset($_POST['editEvent']))
 				{
                     // Get course theme color
+				mysqli_query($connection, "set session transaction isolation level read committed");//JBZ
                     $courseColor = mysqli_query($conection, "SELECT colorname FROM class NATURAL JOIN color WHERE class_no = '".$_POST['course']."'");
                     $rowColor = mysqli_fetch_assoc($courseColor);
                     $courseColor2 = $rowColor['colorname'] ?? null;
