@@ -92,8 +92,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `note` text NOT NULL,
-  PRIMARY KEY (`event_id`),
-  INDEX (`start`)
+  PRIMARY KEY (`event_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- Insert value to table `events`
@@ -112,21 +111,21 @@ INSERT INTO `events` (`class_no`, `title`, `importance`, `color`, `start`, `end`
 DELIMITER $$
 CREATE PROCEDURE `Classes`()
 BEGIN
-	SELECT * from class ORDER BY class_no ASC;
+  SELECT * from class ORDER BY class_no ASC;
 END$$
 DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE `Types`()
 BEGIN
-	select * from type ORDER BY importance ASC;
+  select * from type ORDER BY importance ASC;
 END$$
 DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE `courseColor`(IN course CHAR(10))
 BEGIN
-	SELECT colorname FROM class NATURAL JOIN color WHERE class_no = course;
+  SELECT colorname FROM class NATURAL JOIN color WHERE class_no = course;
 END$$
 DELIMITER ;
 -- not used end

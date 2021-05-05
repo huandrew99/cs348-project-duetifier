@@ -7,7 +7,7 @@ $start = $_POST['start'];
 $end = $_POST['end'];
     
 /* Set transaction level */
-$connection->query("SET TRANSACTION ISOLATION LEVEL LEVEL SERIALIZABLE");
+$connection->query("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
 /* Start transaction */
 mysqli_begin_transaction($connection);
 try {

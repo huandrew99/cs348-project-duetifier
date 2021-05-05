@@ -3,7 +3,7 @@ require 'assets/functions/functions.php';
 $id = $_GET['id'];
     
 /* Set transaction level */
-$connection->query("SET TRANSACTION ISOLATION LEVEL LEVEL SERIALIZABLE");
+$connection->query("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
 mysqli_begin_transaction($connection);
 try {
     /* Stored procedures */
