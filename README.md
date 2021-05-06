@@ -31,4 +31,4 @@ They are located in files `course_edit.php`, `events_edit.php`, `events_del.php`
 ### Stored procedures
 6 stored procedures are predefined in `database.sql` and are utilized in files `index.php`, `course_edit.php`, `events_edit.php`, `events_del.php`, and `events_update.php`.
 ### Prepared statements
-There are 21 places where the prepared statement is used. They are located in file `index.php`, `functions.php`, `course_edit.php`, and `events_edit.php`. Among them, 4 prepared statements are predefined in `config.php` file.
+There are 21 places where the prepared statement is used. They are located in files `index.php`, `functions.php`, `course_edit.php`, and `events_edit.php`. Among them, 4 prepared statements are predefined in `config.php` file.
