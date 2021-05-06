@@ -3,7 +3,7 @@ Duetifier is a reminder web application designed for collage assignments.
 
 ## Related link
 Duetifier application:\
-https://duetifier.uc.r.appspot.com/index.php
+https://duetifier.uc.r.appspot.com
 
 Project stage 2 link:\
 https://drive.google.com/drive/folders/1NBSfq-gZMkWNHsVFNLt1FF9aNv_wguYq?usp=sharing
